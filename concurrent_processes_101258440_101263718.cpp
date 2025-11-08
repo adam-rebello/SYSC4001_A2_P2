@@ -12,26 +12,26 @@
  */
 
 
-// shared structure for shared memory variables
+// shared memory variables
 struct SharedData {
     int multiple;  // value of multiple 
     int counter;   // value of counter used by Process 1 
 };
 
-// union needed for semaphore operations
+
 union SemaphoreUnion {
     int val;
     struct semid_ds *buf;
     unsigned short *array;
 };
 
-// semaphore wait (P) operation - locks semaphore
+// semaphore wait (P) operation locks semaphore
 void sem_wait(int semid) {
     struct sembuf sb = {0, -1, 0};
     semop(semid, &sb, 1);
 }
 
-// semaphore signal (V) operation - unlocks semaphore
+// semaphore signal (V) operation unlocks semaphore
 void sem_signal(int semid) {
     struct sembuf sb = {0, 1, 0};
     semop(semid, &sb, 1);
